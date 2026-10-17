@@ -3,6 +3,7 @@ created by 007n7scout
 powered by pyside6
 
                                                       * ASSETS *
+Inter (font)          | rsms (Rasmus Andersson)   | https://rsms.me/inter/
 Unifont (font)        | Roman Czborra, Paul Hardy | https://unifoundry.com/unifont/
 
                                                    * SOFTWARE USED *
