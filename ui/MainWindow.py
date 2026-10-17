@@ -75,6 +75,7 @@ class MainWindow(QMainWindow):
                new_action.triggered.connect(self.new_file)
                open_action.triggered.connect(self.open_file)
                save_action.triggered.connect(self.save_file)
+               save_as_action.triggered.connect(self.save_as)
 
                # Edit menu
                undo_action.triggered.connect(self.text_editor.undo)
@@ -121,7 +122,7 @@ class MainWindow(QMainWindow):
      def open_dialog(self):
           dialog = QFileDialog(self)
           # dialog.setNameFilter("Plain Text Files (*.txt)")
-          dialog.setFileMode(QFileDialog.FileMode.AnyFile)
+          dialog.setFileMode(QFileDialog.FileMode.ExistingFile)
           dialog.setViewMode(QFileDialog.ViewMode.Detail)
           dialog.setWindowTitle("Select file to open...")
           dialog.exec()
@@ -150,6 +151,8 @@ class MainWindow(QMainWindow):
           if self.file is not None:
                write_file(self.file, self.text_editor.toPlainText())
                self.on_text_changed()
+          else:
+               self.save_as()
 
      def new_file(self):
           if self.text_editor.toPlainText() != "" and self.text_editor.toPlainText() != read_file(self.file):
@@ -163,6 +166,12 @@ class MainWindow(QMainWindow):
           self.on_text_changed()
           return None
 
+     def save_as(self):
+          file_path = QFileDialog.getSaveFileName(None, "Save File", "./", "*.*")
+          if file_path != ():
+               self.file = file_path[0]
+               write_file(file_path[0], self.text_editor.toPlainText())
+               self.on_text_changed()
 
 def generate_action(menu: QMenu, text="Action", shortcut=None, icon=None):
      action = menu.addAction(text)
