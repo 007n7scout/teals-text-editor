@@ -1,5 +1,6 @@
 from PySide6 import QtWidgets
 from PySide6.QtGui import QAction, QTextOption
+from PySide6.QtPrintSupport import QPrintDialog, QPrinter
 from PySide6.QtWidgets import *
 from src.font_manager import load_font
 from src.file_reader import read_file, write_file
@@ -45,8 +46,10 @@ class MainWindow(QMainWindow):
           # File menu
           new_action = generate_action(self.file_menu, "New", "Ctrl+N")
           open_action = generate_action(self.file_menu, "Open", "Ctrl+O")
+          self.file_menu.addSeparator()
           save_action = generate_action(self.file_menu, "Save", "Ctrl+S")
           save_as_action = generate_action(self.file_menu, "Save As", "Ctrl+Shift+S")
+          self.file_menu.addSeparator()
           print_action = generate_action(self.file_menu, "Print", "Ctrl+P")
 
           # Edit menu
@@ -76,6 +79,7 @@ class MainWindow(QMainWindow):
                open_action.triggered.connect(self.open_file)
                save_action.triggered.connect(self.save_file)
                save_as_action.triggered.connect(self.save_as)
+               print_action.triggered.connect(self.print_dialog)
 
                # Edit menu
                undo_action.triggered.connect(self.text_editor.undo)
@@ -172,6 +176,14 @@ class MainWindow(QMainWindow):
                self.file = file_path[0]
                write_file(file_path[0], self.text_editor.toPlainText())
                self.on_text_changed()
+
+     def print_dialog(self):
+          printer = QPrinter()
+          print_dialog = QPrintDialog(printer, self)
+          if print_dialog.exec() == QPrintDialog.Accepted:
+               # TODO: please someone remind me to test this next week
+               #  my printers broken and im to lazy to fix it🥀
+               self.text_editor.document().print_(printer)
 
 def generate_action(menu: QMenu, text="Action", shortcut=None, icon=None):
      action = menu.addAction(text)
