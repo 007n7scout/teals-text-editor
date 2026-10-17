@@ -72,6 +72,7 @@ class MainWindow(QMainWindow):
           # Connections
           def init_menu_bar_events():
                # File menu
+               new_action.triggered.connect(self.new_file)
                open_action.triggered.connect(self.open_file)
                save_action.triggered.connect(self.save_file)
 
@@ -149,6 +150,19 @@ class MainWindow(QMainWindow):
           if self.file is not None:
                write_file(self.file, self.text_editor.toPlainText())
                self.on_text_changed()
+
+     def new_file(self):
+          if self.text_editor.toPlainText() != "" and self.text_editor.toPlainText() != read_file(self.file):
+               warning = UnsavedFileWarning()
+               if warning.ret == QMessageBox.StandardButton.Save:
+                    self.save_file()
+               elif warning.ret == QMessageBox.StandardButton.Cancel:
+                    return None
+          self.file = None
+          self.text_editor.setText("")
+          self.on_text_changed()
+          return None
+
 
 def generate_action(menu: QMenu, text="Action", shortcut=None, icon=None):
      action = menu.addAction(text)
