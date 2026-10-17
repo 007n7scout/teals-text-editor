@@ -1,0 +1,11 @@
+teal's text editor
+created by 007n7scout
+powered by pyside6
+
+                                                      * ASSETS *
+Inconsolata (font)    | Raph Levien               | https://fonts.google.com/specimen/Inconsolata?preview.script=Latn
+Unifont (font)        | Roman Czborra, Paul Hardy | https://unifoundry.com/unifont/
+
+                                                   * SOFTWARE USED *
+PyCharm (IDE)         | JetBrains                 | https://jetbrains.com/pycharm
+PySide6 (GUI library) | The Qt Company            | https://qt.io/qt-for-python

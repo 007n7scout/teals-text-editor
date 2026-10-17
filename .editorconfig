@@ -1,0 +1,7 @@
+root = true
+
+[*]
+tab_width = 5
+indent_size = 5
+indent_style = space
+end_of_line = lf
